@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Price implements Validatable<Price> {
+public class Price implements Validatable {
     private BigDecimal value;
     private Currency currency;
 

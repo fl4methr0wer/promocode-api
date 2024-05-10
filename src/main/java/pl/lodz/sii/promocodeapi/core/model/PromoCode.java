@@ -13,7 +13,7 @@ import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class PromoCode implements Validatable<PromoCode> {
+public class PromoCode implements Validatable{
     private String code;
     private LocalDate expires;
     private Price discount;

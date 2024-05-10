@@ -10,7 +10,7 @@ import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Product implements Validatable<Product> {
+public class Product implements Validatable {
     private Long id;
     private String name;
     private Price price;

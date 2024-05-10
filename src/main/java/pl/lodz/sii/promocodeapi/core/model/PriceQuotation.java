@@ -12,7 +12,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class PriceQuotation implements Validatable<PriceQuotation> {
+public class PriceQuotation implements Validatable {
     private Product product;
     private Optional<PromoCode> promoCode;
     private Price price;
