@@ -1,13 +1,13 @@
 package pl.lodz.sii.promocodeapi.core.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Product implements Validatable<Product> {
     private Long id;
     private String name;
@@ -20,5 +20,6 @@ public class Product implements Validatable<Product> {
         }
         price.validate();
     }
+
 }
 
