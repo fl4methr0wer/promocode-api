@@ -6,15 +6,19 @@ import lombok.Getter;
 import lombok.ToString;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-
-@AllArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode
 public class Price implements Validatable<Price> {
     private BigDecimal value;
     private Currency currency;
+
+    public Price(BigDecimal value, Currency currency) {
+        this.value = value.setScale(2, RoundingMode.CEILING);
+        this.currency = currency;
+    }
 
     @Override
     public void validate() throws ValidationException {

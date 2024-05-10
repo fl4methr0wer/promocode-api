@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import java.time.LocalDate;
+
+import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 
 @Data
@@ -35,6 +37,14 @@ public class PromoCode implements Validatable<PromoCode> {
         discount.validate();
         if (hasBeenUsedTimes > maximumUsages) {
             throw new ValidationException("Maximum usages exceeded");
+        }
+    }
+
+    public Price applyTo(Product product) throws PromoCodeException {
+        try {
+            return product.getPrice().subtract(this.discount);
+        } catch (ValidationException e) {
+            throw new PromoCodeException(e.getMessage());
         }
     }
 }
