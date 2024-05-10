@@ -32,16 +32,19 @@ public class Purcase implements Validatable {
     public Purcase(Product product, PromoCode promoCode) {
         this.date = LocalDate.now();
         this.product = product;
-        this.promoCode = Optional.of(promoCode);
         this.regularPrice = product.getPrice();
-        if (this.promoCode.isPresent()) {
+        this.discountPrice = product.getPrice();
+        if (promoCode == null) {
+            this.promoCode = Optional.empty();
+        } else {
+            this.promoCode = Optional.of(promoCode);
             try {
                 this.discountPrice = promoCode.applyTo(product);
             } catch (PromoCodeException e) {
                 this.discountPrice = this.regularPrice;
             }
         }
-    }
+        }
 
     @Override
     public void validate() throws ValidationException {
