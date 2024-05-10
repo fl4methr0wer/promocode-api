@@ -1,11 +1,11 @@
 package pl.lodz.sii.promocodeapi;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import pl.lodz.sii.promocodeapi.core.model.Price;
 import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.*;
 import pl.lodz.sii.promocodeapi.core.model.Currency;
 
 class PriceTest {
@@ -14,7 +14,7 @@ class PriceTest {
     @DisplayName("Negative numbers are not acceptable")
     void testPriceDoesNotAcceptNegativeValues() {
         assertThrows(ValidationException.class,
-                () -> new Price(new BigDecimal("-1"), Currency.EUR),
+                () -> new Price(new BigDecimal("-1"), Currency.EUR).validate(),
                 "Price does not accept negative values");
     }
 
@@ -22,7 +22,7 @@ class PriceTest {
     @DisplayName("Accepts zero value")
     void testPriceAcceptsZerValue() {
         assertDoesNotThrow(
-                () -> new Price(new BigDecimal("0"), Currency.EUR),
+                () -> new Price(new BigDecimal("0"), Currency.EUR).validate(),
                 "Price should accept ZerValue");
     }
 
@@ -44,8 +44,18 @@ class PriceTest {
         price1 = new Price(BigDecimal.ZERO, Currency.USD);
         price2 = new Price(BigDecimal.ONE, Currency.USD);
         assertThrows(ValidationException.class,
-                () -> price1.subtract(price2),
+                () -> price1.subtract(price2).validate(),
                 "Negative price result of an operation is unacceptable");
     }
 
+    @Test
+    @DisplayName("Non matching currncies raise an exception")
+    void differentCurrenciesRaiseAnException() {
+        Price price1 = new Price(BigDecimal.ONE, Currency.EUR);
+        Price price2 = new Price(BigDecimal.ONE, Currency.USD);
+        assertThrows(ValidationException.class,
+                () -> price1.subtract(price2),
+                "Different currencies should raise an exception");
+
+    }
 }
