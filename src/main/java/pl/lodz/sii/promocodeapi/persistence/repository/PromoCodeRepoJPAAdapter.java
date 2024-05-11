@@ -2,10 +2,10 @@ package pl.lodz.sii.promocodeapi.persistence.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
 import pl.lodz.sii.promocodeapi.persistence.entity.PromoCodeEntity;
-import pl.lodz.sii.promocodeapi.persistence.mapper.ModelEntityMapper;
 import pl.lodz.sii.promocodeapi.persistence.mapper.PromoCodeMapper;
 
 import java.util.List;
@@ -25,7 +25,9 @@ public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
 
     @Override
     public List<PromoCode> readAll() {
-        return List.of();
+        return repo.findAll().stream()
+                .map(mapper::toModel)
+                .toList();
     }
 
     @Override
@@ -34,13 +36,27 @@ public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
         return Optional.of(saved.getCode());
     }
 
+    @Transactional
     @Override
     public boolean deleteByCode(String code) {
-        return false;
+        Optional<PromoCodeEntity> entity = repo.findById(code);
+        if (entity.isEmpty()) {
+            return false;
+        } else {
+            repo.deleteById(code);
+            return true; // has been deleted
+        }
     }
 
+    @Transactional
     @Override
     public boolean update(PromoCode promoCode) {
-        return false;
+        Optional<PromoCodeEntity> entity = repo.findById(promoCode.getCode());
+        if (entity.isEmpty()) {
+            return false; // has not been updated
+        } else {
+            repo.save(mapper.toEntity(promoCode));
+            return true; // has been updated
+        }
     }
 }
