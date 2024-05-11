@@ -1,24 +1,23 @@
 package pl.lodz.sii.promocodeapi.core.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
+
 import java.time.LocalDate;
 
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class PromoCode implements Validatable{
+public class PromoCode implements Validatable {
     private String code;
     private LocalDate expires;
     private Price discount;
-    private Integer maximumUsages;
-    private Integer hasBeenUsedTimes;
+    private Integer maximumUsages = 1;
+    private Integer hasBeenUsedTimes = 0;
 
     @Override
     public void validate() throws ValidationException {
@@ -35,7 +34,7 @@ public class PromoCode implements Validatable{
             throw new ValidationException("Discount must not be null");
         }
         discount.validate();
-        if (hasBeenUsedTimes > maximumUsages) {
+        if (hasBeenUsedTimes != null && maximumUsages != null && hasBeenUsedTimes > maximumUsages) {
             throw new ValidationException("Maximum usages exceeded");
         }
     }
