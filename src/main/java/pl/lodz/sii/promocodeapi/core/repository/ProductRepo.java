@@ -1,4 +1,4 @@
-package pl.lodz.sii.promocodeapi.core.repo;
+package pl.lodz.sii.promocodeapi.core.repository;
 
 import pl.lodz.sii.promocodeapi.core.model.Product;
 import java.util.List;

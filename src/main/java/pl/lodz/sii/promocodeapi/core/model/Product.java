@@ -1,12 +1,10 @@
 package pl.lodz.sii.promocodeapi.core.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
