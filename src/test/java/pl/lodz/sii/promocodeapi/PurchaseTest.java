@@ -1,13 +1,10 @@
 package pl.lodz.sii.promocodeapi;
 
-import ch.qos.logback.core.joran.action.AppenderRefAction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.lodz.sii.promocodeapi.core.model.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PurchaseTest {
@@ -62,8 +59,8 @@ public class PurchaseTest {
     void purchaseWithNullPromoCode() {
         Product product100USD = create100USDProduct();
         PromoCode nullPromoCode = null;
-        Purcase purcase = new Purcase(product100USD, nullPromoCode);
+        Purcase purchase = new Purcase(product100USD, nullPromoCode);
 
-        assertEquals(purcase.getDiscountPrice(), product100USD.getPrice());
+        assertEquals(purchase.getDiscountPrice(), product100USD.getPrice());
     }
 }
