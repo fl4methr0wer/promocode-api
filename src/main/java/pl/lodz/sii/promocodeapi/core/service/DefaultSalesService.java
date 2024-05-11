@@ -8,7 +8,6 @@ import pl.lodz.sii.promocodeapi.core.model.PriceQuotation;
 import pl.lodz.sii.promocodeapi.core.model.Product;
 import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.model.Purchase;
-import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
 import pl.lodz.sii.promocodeapi.core.repository.PurchaseRepo;
 
 import java.util.List;
