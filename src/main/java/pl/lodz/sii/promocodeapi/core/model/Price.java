@@ -1,9 +1,6 @@
 package pl.lodz.sii.promocodeapi.core.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -17,7 +17,6 @@ public class DefaultPromoCodeService implements PromoCodeService {
     @Override
     public List<PromoCode> readAll() {
         List<PromoCode> codes = repo.readAll();
-        System.out.println("PROMOCODE SERVICE: " + codes);
         return repo.readAll();
     }
 

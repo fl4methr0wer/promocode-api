@@ -20,7 +20,7 @@ public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
 
     @Override
     public Optional<PromoCode> findByCode(String code) {
-        return Optional.empty();
+        return Optional.of(mapper.toModel(repo.findById(code).get()));
     }
 
     @Override

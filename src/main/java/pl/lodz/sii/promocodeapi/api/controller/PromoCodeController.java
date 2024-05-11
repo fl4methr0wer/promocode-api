@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.sii.promocodeapi.api.mapper.PromoCodeModelResponseMapper;
 import pl.lodz.sii.promocodeapi.api.mapper.PromoCodeRequestModelMapper;
+import pl.lodz.sii.promocodeapi.api.model.promocode.PromoCodeDetails;
 import pl.lodz.sii.promocodeapi.api.model.promocode.PromoCodeRequest;
 import pl.lodz.sii.promocodeapi.api.model.promocode.PromoCodeResponse;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
@@ -46,10 +47,20 @@ public class PromoCodeController {
         List<PromoCodeResponse> promoCodeResponses = promoCodeService.readAll().stream()
                 .map(modelResponseMapper::map)
                 .toList();
-        LOG.info("CONTROLLER : promo codes" + promoCodeResponses);
         return promoCodeResponses.isEmpty() ?
                 ResponseEntity.notFound().build()
                 : ResponseEntity.ok(promoCodeResponses);
+    }
+
+    @GetMapping("/{code}/details")
+    ResponseEntity<PromoCodeDetails> getPromoCodeDetails(@PathVariable("code") String code) {
+        Optional<PromoCode> promoCode = promoCodeService.read(code);
+        return promoCode.isPresent() ?
+                ResponseEntity.ok(new PromoCodeDetails(
+                        modelResponseMapper.map(promoCode.get()),
+                        promoCode.get().getHasBeenUsedTimes())
+                )
+                : ResponseEntity.notFound().build();
     }
 
 }
