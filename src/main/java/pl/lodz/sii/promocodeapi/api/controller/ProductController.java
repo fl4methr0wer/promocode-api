@@ -10,10 +10,8 @@ import pl.lodz.sii.promocodeapi.api.model.product.ProductResponse;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import pl.lodz.sii.promocodeapi.core.model.Product;
 import pl.lodz.sii.promocodeapi.core.service.ProductService;
-
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -46,5 +44,38 @@ public class ProductController {
                 .toList();
         return ResponseEntity.ok(productResponses);
     }
+
+    @GetMapping("/{id}")
+    ResponseEntity<ProductResponse> findProductById(@PathVariable Long id) {
+        Optional<Product> product = productService.read(id);
+        if (product.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(modelResponseMapper.map(product.get()));
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductCreationRequest request) {
+        Product product;
+        try {
+            product = requestModelMapper.map(request);
+        } catch (ValidationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        product.setId(id);
+        boolean hasBeenSaved = productService.update(product);
+        return hasBeenSaved ?
+                ResponseEntity.ok(modelResponseMapper.map(product))
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Boolean> deleteById(@PathVariable Long id) {
+        boolean hasBeenDeleted = productService.deleteById(id);
+        return hasBeenDeleted ?
+                ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
+
 
 }

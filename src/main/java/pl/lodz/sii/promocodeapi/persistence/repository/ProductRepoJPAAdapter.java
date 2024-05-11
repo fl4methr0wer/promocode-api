@@ -2,11 +2,11 @@ package pl.lodz.sii.promocodeapi.persistence.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.lodz.sii.promocodeapi.core.model.Product;
 import pl.lodz.sii.promocodeapi.core.repository.ProductRepo;
 import pl.lodz.sii.promocodeapi.persistence.entity.ProductEntity;
 import pl.lodz.sii.promocodeapi.persistence.mapper.ProductMapper;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +40,7 @@ public class ProductRepoJPAAdapter implements ProductRepo {
         return Optional.of(mapper.toModel(entity).getId());
     }
 
+    @Transactional
     @Override
     public boolean update(Product product) {
         Optional<ProductEntity> optionalProductEntity = repo.findById(product.getId());
