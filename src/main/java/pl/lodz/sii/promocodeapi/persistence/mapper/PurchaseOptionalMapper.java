@@ -33,7 +33,7 @@ public class PurchaseOptionalMapper {
         }
         entity.setRegularPrice(model.getRegularPrice().getValue());
         entity.setCurrency(model.getRegularPrice().getCurrency());
-        entity.setTotalPrice(model.getTotlaPrice().getValue());
+        entity.setTotalPrice(model.getTotalPrice().getValue());
 
         return Optional.of(entity);
     }
@@ -56,7 +56,7 @@ public class PurchaseOptionalMapper {
         Price regularPrice = new Price(entity.getRegularPrice(), entity.getCurrency());
         Price totalPrice = new Price(entity.getTotalPrice(), entity.getCurrency());
         model.setRegularPrice(regularPrice);
-        model.setTotlaPrice(totalPrice);
+        model.setTotalPrice(totalPrice);
         try {
             model.validate();
             return Optional.of(model);

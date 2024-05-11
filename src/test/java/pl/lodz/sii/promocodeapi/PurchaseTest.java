@@ -21,7 +21,7 @@ public class PurchaseTest {
                 LocalDate.now().plusDays(1),
                 new Price(new BigDecimal("10"), Currency.USD),
                 1,
-                1);
+                0);
     }
 
     @Test
@@ -31,7 +31,9 @@ public class PurchaseTest {
 
         Purchase purchase = new Purchase(product100USD);
 
-        assertEquals(purchase.getTotlaPrice(), purchase.getTotlaPrice());
+        Price expected = purchase.getRegularPrice();
+        Price actual = purchase.getTotalPrice();
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -40,7 +42,11 @@ public class PurchaseTest {
         Product product100USD = create100USDProduct();
         PromoCode valid10USDPromoCode = createValid10USDPromoCode();
         Purchase purchase = new Purchase(product100USD, valid10USDPromoCode);
-        assertEquals(purchase.getTotlaPrice(), new Price(new BigDecimal("90"), Currency.USD));
+
+        Price actual = purchase.getTotalPrice();
+
+        Price expected = new Price(new BigDecimal("90"), Currency.USD);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -51,7 +57,7 @@ public class PurchaseTest {
         PromoCode valid10USDPromoCode = createValid10USDPromoCode();
         Purchase purchase = new Purchase(product100EUR, valid10USDPromoCode);
 
-        assertEquals(purchase.getTotlaPrice(), purchase.getRegularPrice());
+        assertEquals(purchase.getTotalPrice(), purchase.getRegularPrice());
     }
 
     @Test
@@ -61,6 +67,6 @@ public class PurchaseTest {
         PromoCode nullPromoCode = null;
         Purchase purchase = new Purchase(product100USD, nullPromoCode);
 
-        assertEquals(purchase.getTotlaPrice(), product100USD.getPrice());
+        assertEquals(purchase.getTotalPrice(), product100USD.getPrice());
     }
 }

@@ -29,7 +29,7 @@ public class PurchaseModelResponseMapper implements Mapper<Purchase, PurchaseRes
             promoCode = purchase.getPromoCode().get().getCode();
         }
         Price regularPrice = purchase.getRegularPrice();
-        Price totalPrice = purchase.getTotlaPrice();
+        Price totalPrice = purchase.getTotalPrice();
         return new PurchaseResponse(
                 id,
                 purchaseDate,
