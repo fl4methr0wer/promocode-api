@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import pl.lodz.sii.promocodeapi.core.exception.ObjectNotFoundException;
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.model.PriceQuotation;
+import pl.lodz.sii.promocodeapi.core.model.Product;
+import pl.lodz.sii.promocodeapi.core.model.PromoCode;
+import pl.lodz.sii.promocodeapi.core.model.Purchase;
+import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
 import pl.lodz.sii.promocodeapi.core.repository.PurchaseRepo;
 
 import java.util.List;
@@ -15,10 +19,22 @@ import java.util.Optional;
 public class DefaultSalesService implements SalesService {
 
     private final PurchaseRepo purchaseRepo;
+    private final ProductService productService;
+    private final PromoCodeService promoCodeService;
 
     @Override
-    public PriceQuotation calculateDiscount(Long productId, String promoCode) throws PromoCodeException, ObjectNotFoundException {
-        return null;
+    public PriceQuotation calculateDiscount(Long productId, String promoCodeValue)
+            throws PromoCodeException, ObjectNotFoundException {
+
+        Optional<Product> product = productService.read(productId);
+        Optional<PromoCode> promoCode = promoCodeService.read(promoCodeValue);
+        if (product.isEmpty()) {
+            throw new ObjectNotFoundException("Product not found");
+        }
+        if (promoCode.isEmpty()) {
+            throw new PromoCodeException("Promo code does not exist");
+        }
+        return new PriceQuotation(product.get(), promoCode.get());
     }
 
     @Override

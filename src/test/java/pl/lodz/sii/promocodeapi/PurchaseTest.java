@@ -29,9 +29,9 @@ public class PurchaseTest {
     void purchaseWithoutAPromocode() {
         Product product100USD = create100USDProduct();
 
-        Purcase purcase = new Purcase(product100USD);
+        Purchase purchase = new Purchase(product100USD);
 
-        assertEquals(purcase.getDiscountPrice(), purcase.getDiscountPrice());
+        assertEquals(purchase.getDiscountPrice(), purchase.getDiscountPrice());
     }
 
     @Test
@@ -39,8 +39,8 @@ public class PurchaseTest {
     void promocodeWithSameCurrency() {
         Product product100USD = create100USDProduct();
         PromoCode valid10USDPromoCode = createValid10USDPromoCode();
-        Purcase purcase = new Purcase(product100USD, valid10USDPromoCode);
-        assertEquals(purcase.getDiscountPrice(), new Price(new BigDecimal("90"), Currency.USD));
+        Purchase purchase = new Purchase(product100USD, valid10USDPromoCode);
+        assertEquals(purchase.getDiscountPrice(), new Price(new BigDecimal("90"), Currency.USD));
     }
 
     @Test
@@ -49,9 +49,9 @@ public class PurchaseTest {
         Product product100EUR = create100USDProduct();
         product100EUR.setPrice(new Price(new BigDecimal("100"), Currency.EUR));
         PromoCode valid10USDPromoCode = createValid10USDPromoCode();
-        Purcase purcase = new Purcase(product100EUR, valid10USDPromoCode);
+        Purchase purchase = new Purchase(product100EUR, valid10USDPromoCode);
 
-        assertEquals(purcase.getDiscountPrice(), purcase.getRegularPrice());
+        assertEquals(purchase.getDiscountPrice(), purchase.getRegularPrice());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PurchaseTest {
     void purchaseWithNullPromoCode() {
         Product product100USD = create100USDProduct();
         PromoCode nullPromoCode = null;
-        Purcase purchase = new Purcase(product100USD, nullPromoCode);
+        Purchase purchase = new Purchase(product100USD, nullPromoCode);
 
         assertEquals(purchase.getDiscountPrice(), product100USD.getPrice());
     }

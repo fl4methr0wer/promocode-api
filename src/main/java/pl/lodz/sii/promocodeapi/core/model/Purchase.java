@@ -13,7 +13,7 @@ import java.util.Optional;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Purcase implements Validatable {
+public class Purchase implements Validatable {
     Long id;
     LocalDate date;
     Product product;
@@ -21,7 +21,7 @@ public class Purcase implements Validatable {
     Price regularPrice;
     Price discountPrice;
 
-    public Purcase(Product product) {
+    public Purchase(Product product) {
         this.date = LocalDate.now();
         this.product = product;
         this.promoCode = Optional.empty();
@@ -29,7 +29,7 @@ public class Purcase implements Validatable {
         this.discountPrice = product.getPrice();
     }
 
-    public Purcase(Product product, PromoCode promoCode) {
+    public Purchase(Product product, PromoCode promoCode) {
         this.date = LocalDate.now();
         this.product = product;
         this.regularPrice = product.getPrice();

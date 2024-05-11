@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 
 @Component
 @AllArgsConstructor
-public class PriceQuotationModelRespoonseMapper implements Mapper<PriceQuotation, PriceQuotationResponse> {
+public class PriceQuotationModelResponseMapper implements Mapper<PriceQuotation, PriceQuotationResponse> {
 
     private ProductModelResponseMapper responseMapper;
 
