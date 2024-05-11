@@ -28,8 +28,7 @@ public class ProductController {
         } catch (ValidationException e) {
             return ResponseEntity.badRequest().build();
         }
-        System.out.println(product);
-        return ResponseEntity.ok(product.getId());
+        return ResponseEntity.ok(productService.save(product).get());
     }
 
 }

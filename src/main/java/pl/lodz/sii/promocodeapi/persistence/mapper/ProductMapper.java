@@ -1,7 +1,6 @@
 package pl.lodz.sii.promocodeapi.persistence.mapper;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import org.springframework.stereotype.Component;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import pl.lodz.sii.promocodeapi.core.model.Currency;
 import pl.lodz.sii.promocodeapi.core.model.Price;
@@ -9,6 +8,7 @@ import pl.lodz.sii.promocodeapi.core.model.Product;
 import pl.lodz.sii.promocodeapi.persistence.entity.ProductEntity;
 import java.math.BigDecimal;
 
+@Component
 public class ProductMapper implements ModelEntityMapper<Product, ProductEntity> {
 
     @Override
