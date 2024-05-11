@@ -1,11 +1,22 @@
 package pl.lodz.sii.promocodeapi.persistence.repository;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
+import pl.lodz.sii.promocodeapi.persistence.entity.PromoCodeEntity;
+import pl.lodz.sii.promocodeapi.persistence.mapper.ModelEntityMapper;
+import pl.lodz.sii.promocodeapi.persistence.mapper.PromoCodeMapper;
+
 import java.util.List;
 import java.util.Optional;
 
+@Repository
+@AllArgsConstructor
 public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
+
+    private final PromoCodeEntityJPARepo repo;
+    private final PromoCodeMapper mapper;
 
     @Override
     public Optional<PromoCode> findByCode(String code) {
@@ -19,7 +30,8 @@ public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
 
     @Override
     public Optional<String> save(PromoCode promoCode) {
-        return Optional.empty();
+        PromoCodeEntity saved = repo.save(mapper.toEntity(promoCode));
+        return Optional.of(saved.getCode());
     }
 
     @Override
