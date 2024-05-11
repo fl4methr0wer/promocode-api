@@ -32,5 +32,6 @@ public class PurchaseEntity {
 
     BigDecimal totalPrice;
 
+    @Enumerated(EnumType.STRING)
     Currency currency;
 }

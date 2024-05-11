@@ -19,29 +19,30 @@ public class Purchase implements Validatable {
     Product product;
     Optional<PromoCode> promoCode;
     Price regularPrice;
-    Price discountPrice;
+    Price totlaPrice;
 
     public Purchase(Product product) {
         this.date = LocalDate.now();
         this.product = product;
         this.promoCode = Optional.empty();
         this.regularPrice = product.getPrice();
-        this.discountPrice = product.getPrice();
+        this.totlaPrice = product.getPrice();
     }
 
     public Purchase(Product product, PromoCode promoCode) {
         this.date = LocalDate.now();
         this.product = product;
         this.regularPrice = product.getPrice();
-        this.discountPrice = product.getPrice();
+        this.totlaPrice = product.getPrice();
         if (promoCode == null) {
             this.promoCode = Optional.empty();
         } else {
             this.promoCode = Optional.of(promoCode);
             try {
-                this.discountPrice = promoCode.applyTo(product);
+                this.totlaPrice = promoCode.applyTo(product);
             } catch (PromoCodeException e) {
-                this.discountPrice = this.regularPrice;
+                this.promoCode = Optional.empty();
+                this.totlaPrice = this.regularPrice;
             }
         }
         }

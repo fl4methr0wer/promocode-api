@@ -27,20 +27,23 @@ public class PromoCode implements Validatable {
         if (code.matches(".*\\s.*")) {
             throw new ValidationException("PromoCode should not contain whitespace");
         }
-        if (expires == null || expires.isBefore(LocalDate.now())) {
-            throw new ValidationException("Expiration date must not be null and must be after now");
+        if (expires == null) {
+            throw new ValidationException("Expiration date must not be null");
         }
         if (discount == null) {
             throw new ValidationException("Discount must not be null");
         }
         discount.validate();
-        if (hasBeenUsedTimes != null && maximumUsages != null && hasBeenUsedTimes > maximumUsages) {
-            throw new ValidationException("Maximum usages exceeded");
-        }
     }
 
     public Price applyTo(Product product) throws PromoCodeException {
         try {
+            if (expires.isBefore(LocalDate.now())) {
+                throw new ValidationException("Expired promo code cannot be applied");
+            }
+            if (this.getHasBeenUsedTimes() >= maximumUsages) {
+                throw new ValidationException("Promo code exceeded maximum usages");
+            }
             return product.getPrice().subtract(this.discount);
         } catch (ValidationException e) {
             throw new PromoCodeException(e.getMessage());

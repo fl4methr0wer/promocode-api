@@ -52,6 +52,14 @@ public class PromoCodeController {
                 : ResponseEntity.ok(promoCodeResponses);
     }
 
+    @GetMapping("/{code}")
+    ResponseEntity<PromoCodeResponse> getPromoCode(@PathVariable String code) {
+        Optional<PromoCode> promoCode = promoCodeService.read(code);
+        return promoCode.isPresent() ?
+                ResponseEntity.ok(modelResponseMapper.map(promoCode.get()))
+                : ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/{code}/details")
     ResponseEntity<PromoCodeDetails> getPromoCodeDetails(@PathVariable("code") String code) {
         Optional<PromoCode> promoCode = promoCodeService.read(code);

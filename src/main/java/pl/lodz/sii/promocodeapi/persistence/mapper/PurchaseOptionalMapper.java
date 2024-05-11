@@ -25,12 +25,16 @@ public class PurchaseOptionalMapper {
         PurchaseEntity entity = new PurchaseEntity();
         entity.setPurchaseDate(model.getDate());
         entity.setProduct(productMapper.toEntity(model.getProduct()));
-
         Optional<PromoCode> promoCode = model.getPromoCode();
-        entity.getPromoCode() = promoCode.isPresent() ? promoCodeMapper.toEntity(promoCode.get()) : null;
+        if (promoCode.isEmpty()) {
+            entity.setPromoCode(null);
+        } else {
+            entity.setPromoCode(promoCodeMapper.toEntity(promoCode.get()));
+        }
         entity.setRegularPrice(model.getRegularPrice().getValue());
         entity.setCurrency(model.getRegularPrice().getCurrency());
-        entity.setTotalPrice(model.getRegularPrice().getValue());
+        entity.setTotalPrice(model.getTotlaPrice().getValue());
+
         return Optional.of(entity);
     }
 
@@ -44,13 +48,15 @@ public class PurchaseOptionalMapper {
         model.setDate(entity.getPurchaseDate());
         model.setProduct(productMapper.toModel(entity.getProduct()));
         PromoCodeEntity promoCodeEntity = optionalEntity.get().getPromoCode();
-        model.getPromoCode() = (promoCodeEntity != null) ?
-                Optional.ofNullable(promoCodeMapper.toModel(promoCodeEntity))
-                : Optional.empty();
+        if (promoCodeEntity == null) {
+            model.setPromoCode(Optional.empty());
+        } else {
+            model.setPromoCode(Optional.of(promoCodeMapper.toModel(promoCodeEntity)));
+        }
         Price regularPrice = new Price(entity.getRegularPrice(), entity.getCurrency());
         Price totalPrice = new Price(entity.getTotalPrice(), entity.getCurrency());
         model.setRegularPrice(regularPrice);
-        model.setDiscountPrice(totalPrice);
+        model.setTotlaPrice(totalPrice);
         try {
             model.validate();
             return Optional.of(model);

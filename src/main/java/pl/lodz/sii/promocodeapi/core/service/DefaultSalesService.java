@@ -38,21 +38,37 @@ public class DefaultSalesService implements SalesService {
 
     @Override
     public Optional<Purchase> makePurchase(Long productId) throws ObjectNotFoundException {
-        return Optional.empty();
+        Optional<Product> product = productService.read(productId);
+        if (product.isEmpty()) {
+            throw new ObjectNotFoundException("Product not found");
+        }
+        Purchase purchase = new Purchase(product.get());
+        Optional<Purchase> savedPurchase = purchaseRepo.save(purchase);
+        return savedPurchase;
     }
 
     @Override
     public Optional<Purchase> makePurchaseWithPromoCode(Long productId, String promoCode) throws ObjectNotFoundException, PromoCodeException {
-        return Optional.empty();
+        Optional<Product> product = productService.read(productId);
+        if (product.isEmpty()) {
+            throw new ObjectNotFoundException("Product not found");
+        }
+        Optional<PromoCode> promo = promoCodeService.read(promoCode);
+        if (promo.isEmpty()) {
+            throw new PromoCodeException("Promo code does not exist");
+        }
+        Purchase purchase = new Purchase(product.get(), promo.get());
+        Optional<Purchase> savedPurchase = purchaseRepo.save(purchase);
+        return savedPurchase;
     }
 
     @Override
     public List<Purchase> getAllPurchases() {
-        return List.of();
+        return purchaseRepo.readAll();
     }
 
     @Override
     public Optional<Purchase> getById(Long id) {
-        return Optional.empty();
+        return purchaseRepo.findById(id);
     }
 }
