@@ -44,11 +44,13 @@ public class SalesController {
     }
 
     @PostMapping
-    public ResponseEntity<PurchaseResponse> purchase(@RequestParam Long productId,
-                                                     @RequestParam(required = false) String promocode) {
+    public ResponseEntity<PurchaseResponse> purchase(@RequestBody
+                                                     ProductPromoRequest request) {
+        Long productId = request.productId();
+        String promocode = request.promoCode();
         Optional<Purchase> purchase;
         try {
-            if (promocode != null) {;
+            if (promocode != null) {
                 purchase = salesService.makePurchaseWithPromoCode(productId, promocode);
             } else {
                 purchase = salesService.makePurchase(productId);
