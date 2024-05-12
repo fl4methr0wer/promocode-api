@@ -92,8 +92,9 @@ public class SalesController {
     @GetMapping("/report")
     ResponseEntity<List<SalesReportRecord>> getSalesReport() {
         List<SalesReportRecord> salesReportRecords = salesService.getSalesReport();
+        System.out.println("CONTROLLER REPORT: " + salesReportRecords);
         return salesReportRecords.isEmpty() ?
-                ResponseEntity.ok(salesReportRecords)
-                : ResponseEntity.notFound().build();
+                ResponseEntity.notFound().build()
+                : ResponseEntity.ok(salesReportRecords);
     }
 }
