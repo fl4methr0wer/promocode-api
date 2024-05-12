@@ -5,7 +5,6 @@ import pl.lodz.sii.promocodeapi.api.model.product.ProductResponse;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import pl.lodz.sii.promocodeapi.core.model.Currency;
 import pl.lodz.sii.promocodeapi.core.model.Product;
-
 import java.math.BigDecimal;
 
 @Component

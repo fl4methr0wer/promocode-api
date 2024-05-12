@@ -32,7 +32,7 @@ public class PromoCodeController {
     ResponseEntity<String> createPromoCode(@RequestBody PromoCodeRequest promoCodeRequest) {
         PromoCode code;
         try {
-            code = requestPromoCodeMapper.map(promoCodeRequest); // should throw an exception on wrong payload
+            code = requestPromoCodeMapper.map(promoCodeRequest);
         } catch (ValidationException e) {
             LOG.error(e.getMessage());
             return ResponseEntity.badRequest().body("Wrong payload. " + e.getMessage());

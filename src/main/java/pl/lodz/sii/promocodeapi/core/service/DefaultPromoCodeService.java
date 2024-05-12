@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ public class DefaultPromoCodeService implements PromoCodeService {
 
     @Override
     public List<PromoCode> readAll() {
-        List<PromoCode> codes = repo.readAll();
         return repo.readAll();
     }
 

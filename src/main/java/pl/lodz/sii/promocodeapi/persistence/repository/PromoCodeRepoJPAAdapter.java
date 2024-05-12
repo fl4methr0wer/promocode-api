@@ -7,7 +7,6 @@ import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
 import pl.lodz.sii.promocodeapi.persistence.entity.PromoCodeEntity;
 import pl.lodz.sii.promocodeapi.persistence.mapper.PromoCodeMapper;
-
 import java.util.List;
 import java.util.Optional;
 

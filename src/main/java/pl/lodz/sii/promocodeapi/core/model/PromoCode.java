@@ -1,9 +1,7 @@
 package pl.lodz.sii.promocodeapi.core.model;
 
 import lombok.*;
-
 import java.time.LocalDate;
-
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 

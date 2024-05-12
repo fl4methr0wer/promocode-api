@@ -8,7 +8,6 @@ import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import pl.lodz.sii.promocodeapi.core.model.Price;
 import pl.lodz.sii.promocodeapi.core.model.Product;
 import pl.lodz.sii.promocodeapi.core.model.Purchase;
-
 import java.time.LocalDate;
 
 @Component

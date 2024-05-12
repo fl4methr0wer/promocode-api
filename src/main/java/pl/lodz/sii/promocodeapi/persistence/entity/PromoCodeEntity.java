@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.lodz.sii.promocodeapi.core.model.Currency;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

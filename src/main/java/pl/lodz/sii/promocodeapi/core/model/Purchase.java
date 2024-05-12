@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -59,7 +58,6 @@ public class Purchase implements Validatable {
                 new Price(BigDecimal.ZERO, price.getCurrency())
                 : price;
     }
-
 
     @Override
     public void validate() throws ValidationException {

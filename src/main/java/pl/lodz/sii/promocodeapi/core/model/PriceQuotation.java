@@ -3,7 +3,6 @@ package pl.lodz.sii.promocodeapi.core.model;
 import lombok.*;
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
-
 import java.math.BigDecimal;
 import java.util.Optional;
 

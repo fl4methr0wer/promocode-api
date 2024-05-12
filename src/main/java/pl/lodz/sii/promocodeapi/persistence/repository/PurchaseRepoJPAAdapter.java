@@ -48,9 +48,6 @@ public class PurchaseRepoJPAAdapter implements PurchaseRepo {
         return entity.isEmpty() ?
                 Optional.empty()
                 : optionalMapper.toModel(
-                        Optional.of(
-                                purchaseRepo.save(entity.get())
-                        )
-                );
+                        Optional.of(purchaseRepo.save(entity.get())));
     }
 }
