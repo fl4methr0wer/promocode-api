@@ -50,19 +50,16 @@ public class SalesController {
         String promocode = request.promoCode();
         Optional<Purchase> purchase;
         try {
-            if (promocode != null) {
-                purchase = salesService.makePurchaseWithPromoCode(productId, promocode);
-            } else {
-                purchase = salesService.makePurchase(productId);
-            }
+            purchase = (promocode != null) ?
+                    salesService.makePurchaseWithPromoCode(productId, promocode)
+                    : salesService.makePurchase(productId);
         } catch (ObjectNotFoundException | PromoCodeException e) {
             LOG.error(e.getMessage());
             return ResponseEntity.notFound().build();
         }
-        if (purchase.isPresent()) {
-            return ResponseEntity.ok(purchaseResponseMapper.map(purchase.get()));
-        }
-        return ResponseEntity.internalServerError().build();
+        return purchase.isPresent() ?
+                ResponseEntity.ok(purchaseResponseMapper.map(purchase.get()))
+                : ResponseEntity.internalServerError().build();
     }
 
     @GetMapping
