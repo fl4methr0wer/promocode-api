@@ -20,7 +20,10 @@ public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
 
     @Override
     public Optional<PromoCode> findByCode(String code) {
-        return Optional.of(mapper.toModel(repo.findById(code).get()));
+        Optional<PromoCodeEntity> foundPromo = repo.findById(code);
+        return foundPromo.isPresent() ?
+                Optional.of(mapper.toModel(foundPromo.get()))
+                : Optional.empty();
     }
 
     @Override
@@ -58,5 +61,18 @@ public class PromoCodeRepoJPAAdapter implements PromoCodeRepo {
             repo.save(mapper.toEntity(promoCode));
             return true; // has been updated
         }
+    }
+
+    @Transactional
+    @Override
+    public boolean incrementHasBeenUsed(PromoCode promoCode) {
+        Optional<PromoCodeEntity> optionalPromoCode = repo.findById(promoCode.getCode());
+        if (optionalPromoCode.isEmpty()) {
+            return false;
+        }
+        Integer oldHasBeenUsedTimes = optionalPromoCode.get().getHasBeenUsedTimes();
+        optionalPromoCode.get().setHasBeenUsedTimes(oldHasBeenUsedTimes + 1);
+        repo.save(optionalPromoCode.get());
+        return true;
     }
 }

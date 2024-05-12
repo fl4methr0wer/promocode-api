@@ -10,4 +10,5 @@ public interface PromoCodeRepo {
     Optional<String> save(PromoCode promoCode);
     boolean deleteByCode(String code);
     boolean update(PromoCode promoCode);
+    boolean incrementHasBeenUsed(PromoCode promoCode);
 }

@@ -3,7 +3,6 @@ package pl.lodz.sii.promocodeapi.persistence.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pl.lodz.sii.promocodeapi.core.model.Product;
 import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.model.Purchase;
 import pl.lodz.sii.promocodeapi.core.repository.PromoCodeRepo;
@@ -44,14 +43,8 @@ public class PurchaseRepoJPAAdapter implements PurchaseRepo {
         Optional<PurchaseEntity> entity = optionalMapper.toEntity(purchase);
         Optional<PromoCode> promo = purchase.getPromoCode();
         if (promo.isPresent()) {
-            Optional<PromoCode> optionalPromoCode = promoCodeRepo.findByCode(promo.get().getCode());
-            if (optionalPromoCode.isPresent()) {
-                Integer oldHasBeenUsedTimes = optionalPromoCode.get().getHasBeenUsedTimes();
-                optionalPromoCode.get().setHasBeenUsedTimes(oldHasBeenUsedTimes + 1);
-                promoCodeRepo.save(optionalPromoCode.get());
-            }
+            promoCodeRepo.incrementHasBeenUsed(promo.get());
         }
-
         return entity.isEmpty() ?
                 Optional.empty()
                 : optionalMapper.toModel(

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -34,23 +36,38 @@ public class Purchase implements Validatable {
         this.product = product;
         this.regularPrice = product.getPrice();
         this.totalPrice = product.getPrice();
+        applyPromoCode(promoCode);
+    }
+
+    private void applyPromoCode(PromoCode promoCode) {
         if (promoCode == null) {
             this.promoCode = Optional.empty();
-        } else {
-            this.promoCode = Optional.of(promoCode);
-            try {
-                this.totalPrice = promoCode.applyTo(product);
-            } catch (PromoCodeException e) {
-                this.promoCode = Optional.empty();
-                this.totalPrice = this.regularPrice;
-            }
+            return;
+        }
+        this.promoCode = Optional.of(promoCode);
+        try {
+            this.totalPrice = promoCode.applyTo(product);
+            this.totalPrice = changePriceEqualToZeroIfIsNegative(this.totalPrice);
+        } catch (PromoCodeException e) {
+            this.promoCode = Optional.empty();
+            this.totalPrice = this.regularPrice;
         }
     }
+
+    private Price changePriceEqualToZeroIfIsNegative(Price price) {
+        return price.getValue().compareTo(BigDecimal.ZERO) < 0 ?
+                new Price(BigDecimal.ZERO, price.getCurrency())
+                : price;
+    }
+
 
     @Override
     public void validate() throws ValidationException {
         if (date == null) {
             throw new ValidationException("Date is required");
+        }
+        if (product == null) {
+            throw new ValidationException("Product is required");
         }
     }
 }

@@ -6,6 +6,7 @@ import pl.lodz.sii.promocodeapi.core.model.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class PurchaseTest {
 
@@ -68,5 +69,18 @@ public class PurchaseTest {
         Purchase purchase = new Purchase(product100USD, nullPromoCode);
 
         assertEquals(purchase.getTotalPrice(), product100USD.getPrice());
+    }
+
+    @Test
+    @DisplayName("Procode with value exceeding the productValue results in 0 total price")
+    void procodeWithValueExceeding0TotalPrice() {
+        Product product5USD = create100USDProduct();
+        product5USD.setPrice(new Price(new BigDecimal("5"), Currency.USD));
+        PromoCode valid10USDPromoCode = createValid10USDPromoCode();
+
+        Purchase purchase = new Purchase(product5USD, valid10USDPromoCode);
+        Price expected = new Price(BigDecimal.ZERO, Currency.USD);
+
+        assertEquals(expected, purchase.getTotalPrice());
     }
 }
