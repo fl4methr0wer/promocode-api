@@ -13,8 +13,10 @@ public class ProductRequestModelMapper implements Mapper<ProductCreationRequest,
     public Product map(ProductCreationRequest request) throws ValidationException {
         Product product = new Product();
         product.setName(request.name());
+        product.setDescription(request.description());
         product.setPrice(new Price(request.price(), request.currency()));
         product.validate();
+        System.out.println("REQUEST MODEL MAP:" + product);
         return product;
     }
 }

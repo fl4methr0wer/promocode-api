@@ -42,19 +42,13 @@ public class ProductRepoJPAAdapter implements ProductRepo {
 
     @Transactional
     @Override
-    public boolean update(Product product) {
-        Optional<ProductEntity> optionalProductEntity = repo.findById(product.getId());
-        if (optionalProductEntity.isEmpty()) {
-            return false;
+    public Optional<Product> update(Product product) {
+        Optional<ProductEntity> existingOptionalProductEntity = repo.findById(product.getId());
+        if (existingOptionalProductEntity.isEmpty()) {
+            return Optional.empty();
         }
-        ProductEntity existing = optionalProductEntity.get();
-        ProductEntity updated = mapper.toEntity(product);
-        existing.setName(updated.getName());
-        existing.setPrice(updated.getPrice());
-        existing.setCurrency(updated.getCurrency());
-
-        repo.save(existing);
-        return true;
+        ProductEntity saved = repo.saveAndFlush(mapper.toEntity(product));
+        return Optional.of(mapper.toModel(saved));
     }
 
     @Override

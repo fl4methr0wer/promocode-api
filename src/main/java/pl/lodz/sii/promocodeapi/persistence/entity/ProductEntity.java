@@ -17,6 +17,7 @@ public class ProductEntity {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     Long id;
     String name;
+    String description;
     BigDecimal price;
     @Enumerated(EnumType.STRING)
     Currency currency;

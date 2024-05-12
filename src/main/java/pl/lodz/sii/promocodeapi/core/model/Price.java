@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 @ToString
 @EqualsAndHashCode
 public class Price implements Validatable {
-    private BigDecimal value;
+    private BigDecimal value = BigDecimal.ZERO;
     private Currency currency;
 
     public Price(BigDecimal value, Currency currency) {

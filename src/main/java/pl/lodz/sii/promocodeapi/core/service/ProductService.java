@@ -8,6 +8,6 @@ public interface ProductService {
     List<Product> readAll();
     Optional<Product> read(Long id);
     Optional<Long> save(Product product);
-    boolean update(Product product);
+    Optional<Product> update(Product product);
     boolean deleteById(Long id);
 }

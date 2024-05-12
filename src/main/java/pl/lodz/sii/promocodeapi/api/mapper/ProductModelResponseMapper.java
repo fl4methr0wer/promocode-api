@@ -15,8 +15,9 @@ public class ProductModelResponseMapper implements Mapper<Product, ProductRespon
     public ProductResponse map(Product product) throws ValidationException {
         Long id = product.getId();
         String name = product.getName();
+        String description = product.getDescription();
         BigDecimal price = product.getPrice().getValue();
         Currency currency = product.getPrice().getCurrency();
-        return new ProductResponse(id, name, price, currency);
+        return new ProductResponse(id, name, description, price, currency);
     }
 }

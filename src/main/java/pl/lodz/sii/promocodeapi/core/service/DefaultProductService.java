@@ -30,7 +30,7 @@ public class DefaultProductService implements ProductService {
     }
 
     @Override
-    public boolean update(Product product) {
+    public Optional<Product> update(Product product) {
         return productRepo.update(product);
     }
 

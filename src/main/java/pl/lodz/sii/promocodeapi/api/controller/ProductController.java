@@ -63,9 +63,9 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         product.setId(id);
-        boolean hasBeenSaved = productService.update(product);
-        return hasBeenSaved ?
-                ResponseEntity.ok(modelResponseMapper.map(product))
+        Optional<Product> updated = productService.update(product);
+        return updated.isPresent() ?
+                ResponseEntity.ok(modelResponseMapper.map(updated.get()))
                 : ResponseEntity.notFound().build();
     }
 

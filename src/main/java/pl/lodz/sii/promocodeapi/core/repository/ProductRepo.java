@@ -9,5 +9,5 @@ public interface ProductRepo {
     List<Product> readAll();
     Optional<Long> save(Product product);
     boolean deleteById(Long id);
-    boolean update(Product product);
+    Optional<Product> update(Product product);
 }
