@@ -67,7 +67,9 @@ public class SalesController {
         List<PurchaseResponse> purchases = salesService.getAllPurchases().stream()
                 .map(purchaseResponseMapper::map)
                 .toList();
-        return ResponseEntity.ok(purchases);
+        return purchases.isEmpty() ?
+                ResponseEntity.notFound().build()
+                : ResponseEntity.ok(purchases);
     }
 
     @GetMapping("/{id}")
