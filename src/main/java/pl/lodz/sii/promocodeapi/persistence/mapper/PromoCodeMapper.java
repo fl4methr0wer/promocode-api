@@ -14,7 +14,7 @@ public class PromoCodeMapper implements ModelEntityMapper<PromoCode, PromoCodeEn
         PromoCodeEntity entity = new PromoCodeEntity();
         entity.setCode(model.getCode());
         entity.setExpires(model.getExpires());
-        entity.setValue(model.getDiscount().getValue());
+        entity.setDiscountValue(model.getDiscount().getValue());
         entity.setCurrency(model.getDiscount().getCurrency());
         entity.setMaximumUsages(model.getMaximumUsages());
         entity.setHasBeenUsedTimes(model.getHasBeenUsedTimes());
@@ -26,7 +26,7 @@ public class PromoCodeMapper implements ModelEntityMapper<PromoCode, PromoCodeEn
         PromoCode model = new PromoCode();
         model.setCode(entity.getCode());
         model.setExpires(entity.getExpires());
-        model.setDiscount(new Price(entity.getValue(), entity.getCurrency()));
+        model.setDiscount(new Price(entity.getDiscountValue(), entity.getCurrency()));
         model.setMaximumUsages(entity.getMaximumUsages());
         model.setHasBeenUsedTimes(entity.getHasBeenUsedTimes());
 

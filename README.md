@@ -182,3 +182,6 @@ To run the project locally, follow these steps:
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
 3. Open a terminal window and run the following command to start the application:
+4. h2 database console is available at "localhost:8080/h2-console"
+   - user : "sa"
+   - password : "password"

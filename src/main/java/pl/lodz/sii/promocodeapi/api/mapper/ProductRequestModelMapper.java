@@ -16,7 +16,6 @@ public class ProductRequestModelMapper implements Mapper<ProductCreationRequest,
         product.setDescription(request.description());
         product.setPrice(new Price(request.price(), request.currency()));
         product.validate();
-        System.out.println("REQUEST MODEL MAP:" + product);
         return product;
     }
 }

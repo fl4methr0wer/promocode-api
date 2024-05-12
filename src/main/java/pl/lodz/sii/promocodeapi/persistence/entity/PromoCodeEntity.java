@@ -3,7 +3,6 @@ package pl.lodz.sii.promocodeapi.persistence.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
 import pl.lodz.sii.promocodeapi.core.model.Currency;
 
 import java.math.BigDecimal;
@@ -17,7 +16,7 @@ public class PromoCodeEntity {
     @Id
     private String code;
     LocalDate expires;
-    BigDecimal value;
+    BigDecimal discountValue;
     @Enumerated(EnumType.STRING)
     Currency currency;
     Integer maximumUsages;
