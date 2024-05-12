@@ -8,13 +8,14 @@ import pl.lodz.sii.promocodeapi.core.model.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class PriceQuotationTest {
+class PriceQuotationTest {
 
     private Product create100USDProduct() {
         Long id = 1L;
         String Name = "test product";
+        String description = "test description";
         Price price = new Price(new BigDecimal("100.00"), Currency.USD);
-        return new Product(id, Name, price);
+        return new Product(id, Name, description, price);
     }
 
     @Test
@@ -30,7 +31,7 @@ public class PriceQuotationTest {
     @DisplayName("10 Euro promo code does not apply 100 USD Product with warning")
     void productPriceAndPromoCodeValueDoNotMatch() {
         Product product = create100USDProduct();
-        PromoCode code = new PromoCode("testPromoo",
+        PromoCode code = new PromoCode("testPromo",
                 LocalDate.now().plusDays(1),
                 new Price(new BigDecimal("10"), Currency.EUR),
                 10,
@@ -38,7 +39,10 @@ public class PriceQuotationTest {
 
         PriceQuotation quotation = new PriceQuotation(product, code);
 
-        assertNotEquals(quotation.getWarning(), null);
+        String incorrectWarning = "";
+        String actualWarning = quotation.getWarning();
+
+        assertNotEquals(incorrectWarning, actualWarning);
         assertEquals(product.getPrice(), quotation.getPrice());
     }
 
@@ -53,7 +57,10 @@ public class PriceQuotationTest {
                 1);
         PriceQuotation quotation = new PriceQuotation(product, promoCode);
 
-        assertEquals(quotation.getWarning(), "");
+        String expectedWarning = "";
+        String actualWarning = quotation.getWarning();
+
+        assertEquals(expectedWarning, actualWarning);
         assertEquals(quotation.getPrice(), new Price(new BigDecimal("90"), Currency.USD));
     }
 
@@ -69,7 +76,10 @@ public class PriceQuotationTest {
 
         PriceQuotation quotation = new PriceQuotation(product, promoCode);
 
-        assertEquals(quotation.getWarning(), "");
+        String expectedWarning = "";
+        String actualWarning = quotation.getWarning();
+
+        assertEquals(expectedWarning, actualWarning);
         assertEquals(quotation.getPrice(), new Price(BigDecimal.ZERO, Currency.USD));
     }
 

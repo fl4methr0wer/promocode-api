@@ -6,15 +6,15 @@ import pl.lodz.sii.promocodeapi.core.model.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class PurchaseTest {
+class PurchaseTest {
 
     private Product create100USDProduct() {
         Long id = 1L;
         String Name = "test product";
+        String description = "test product";
         Price price = new Price(new BigDecimal("100.00"), Currency.USD);
-        return new Product(id, Name, price);
+        return new Product(id, Name, description, price);
     }
 
     private PromoCode createValid10USDPromoCode() {
@@ -68,7 +68,7 @@ public class PurchaseTest {
         PromoCode nullPromoCode = null;
         Purchase purchase = new Purchase(product100USD, nullPromoCode);
 
-        assertEquals(purchase.getTotalPrice(), product100USD.getPrice());
+        assertEquals(product100USD.getPrice() , purchase.getTotalPrice());
     }
 
     @Test
