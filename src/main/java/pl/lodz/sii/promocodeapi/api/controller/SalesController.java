@@ -9,6 +9,7 @@ import pl.lodz.sii.promocodeapi.api.mapper.PriceQuotationModelResponseMapper;
 import pl.lodz.sii.promocodeapi.api.mapper.PurchaseModelResponseMapper;
 import pl.lodz.sii.promocodeapi.api.model.PriceQuotationResponse;
 import pl.lodz.sii.promocodeapi.api.model.PurchaseResponse;
+import pl.lodz.sii.promocodeapi.api.model.product.ProductPromoRequest;
 import pl.lodz.sii.promocodeapi.core.model.PriceQuotation;
 import pl.lodz.sii.promocodeapi.core.model.Purchase;
 import pl.lodz.sii.promocodeapi.core.service.SalesService;
@@ -29,12 +30,11 @@ public class SalesController {
     private final Logger LOG = LoggerFactory.getLogger(SalesController.class);
 
     @GetMapping("/quotation")
-    ResponseEntity<PriceQuotationResponse> calculateDiscountedPrice(@RequestParam Long productId,
-                                                                    @RequestParam String promocode) {
-        System.out.println("SALES CONTROLLER: " + "product: " + productId  + "code: " + promocode);
+    ResponseEntity<PriceQuotationResponse> calculateDiscountedPrice(@RequestBody
+                                                                    ProductPromoRequest request) {
         PriceQuotation quotation;
         try {
-            quotation = salesService.calculateDiscount(productId, promocode);
+            quotation = salesService.calculateDiscount(request.productId(), request.promoCode());
         } catch (PromoCodeException | ObjectNotFoundException e) {
             LOG.error(e.getMessage());
             return ResponseEntity.notFound().build();
