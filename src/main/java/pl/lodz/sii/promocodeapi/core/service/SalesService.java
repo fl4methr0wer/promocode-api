@@ -4,6 +4,8 @@ import pl.lodz.sii.promocodeapi.core.exception.ObjectNotFoundException;
 import pl.lodz.sii.promocodeapi.core.exception.PromoCodeException;
 import pl.lodz.sii.promocodeapi.core.model.PriceQuotation;
 import pl.lodz.sii.promocodeapi.core.model.Purchase;
+import pl.lodz.sii.promocodeapi.core.model.SalesReportRecord;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +15,5 @@ public interface SalesService {
     Optional<Purchase> makePurchaseWithPromoCode(Long productId, String promoCode) throws ObjectNotFoundException, PromoCodeException;
     List<Purchase> getAllPurchases();
     Optional<Purchase> getById(Long id);
+    List<SalesReportRecord> getSalesReport();
 }

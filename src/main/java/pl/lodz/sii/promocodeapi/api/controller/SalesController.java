@@ -12,6 +12,7 @@ import pl.lodz.sii.promocodeapi.api.model.PurchaseResponse;
 import pl.lodz.sii.promocodeapi.api.model.product.ProductPromoRequest;
 import pl.lodz.sii.promocodeapi.core.model.PriceQuotation;
 import pl.lodz.sii.promocodeapi.core.model.Purchase;
+import pl.lodz.sii.promocodeapi.core.model.SalesReportRecord;
 import pl.lodz.sii.promocodeapi.core.service.SalesService;
 import pl.lodz.sii.promocodeapi.core.exception.*;
 
@@ -76,12 +77,20 @@ public class SalesController {
     ResponseEntity<PurchaseResponse> getPurchaseById(@PathVariable Long id) {
         Optional<Purchase> purchase = salesService.getById(id);
         PurchaseResponse response;
+        if (purchase.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         try {
             response = purchaseResponseMapper.map(purchase.get());
         } catch (Exception e) {
             LOG.error(e.getMessage());
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/report")
+    List<SalesReportRecord> getSalesReport() {
+        return salesService.getSalesReport();
     }
 }

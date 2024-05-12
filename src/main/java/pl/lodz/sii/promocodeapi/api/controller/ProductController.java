@@ -30,7 +30,10 @@ public class ProductController {
         } catch (ValidationException e) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(productService.save(product).get());
+        Optional<Long> savedProductId = productService.save(product);
+        return savedProductId.isPresent() ?
+                ResponseEntity.ok(savedProductId.get())
+                : ResponseEntity.internalServerError().build();
     }
 
     @GetMapping
@@ -76,6 +79,4 @@ public class ProductController {
                 ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
-
-
 }
