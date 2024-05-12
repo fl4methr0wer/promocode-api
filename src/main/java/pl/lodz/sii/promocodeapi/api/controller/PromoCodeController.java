@@ -14,11 +14,8 @@ import pl.lodz.sii.promocodeapi.api.model.promocode.PromoCodeResponse;
 import pl.lodz.sii.promocodeapi.core.exception.ValidationException;
 import pl.lodz.sii.promocodeapi.core.model.PromoCode;
 import pl.lodz.sii.promocodeapi.core.service.PromoCodeService;
-
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/promo")
@@ -73,7 +70,9 @@ public class PromoCodeController {
         List<PromoCodeDetails> promoCodeDetailsList = promoCodes.stream()
                 .map(modelDetailsMapper::map)
                 .toList();
-        return ResponseEntity.ok(promoCodeDetailsList);
+        return promoCodeDetailsList.isEmpty() ?
+                ResponseEntity.notFound().build()
+                : ResponseEntity.ok(promoCodeDetailsList);
     }
 
     @GetMapping("/{code}/details")

@@ -15,7 +15,6 @@ import pl.lodz.sii.promocodeapi.core.model.Purchase;
 import pl.lodz.sii.promocodeapi.core.model.SalesReportRecord;
 import pl.lodz.sii.promocodeapi.core.service.SalesService;
 import pl.lodz.sii.promocodeapi.core.exception.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +81,7 @@ public class SalesController {
         }
         try {
             response = purchaseResponseMapper.map(purchase.get());
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             LOG.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
@@ -92,7 +91,6 @@ public class SalesController {
     @GetMapping("/report")
     ResponseEntity<List<SalesReportRecord>> getSalesReport() {
         List<SalesReportRecord> salesReportRecords = salesService.getSalesReport();
-        System.out.println("CONTROLLER REPORT: " + salesReportRecords);
         return salesReportRecords.isEmpty() ?
                 ResponseEntity.notFound().build()
                 : ResponseEntity.ok(salesReportRecords);

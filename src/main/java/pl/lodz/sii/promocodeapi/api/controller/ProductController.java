@@ -45,16 +45,17 @@ public class ProductController {
         List<ProductResponse> productResponses = allProducts.stream()
                 .map(modelResponseMapper::map)
                 .toList();
-        return ResponseEntity.ok(productResponses);
+        return productResponses.isEmpty() ?
+                ResponseEntity.notFound().build()
+                : ResponseEntity.ok(productResponses);
     }
 
     @GetMapping("/{id}")
     ResponseEntity<ProductResponse> findProductById(@PathVariable Long id) {
         Optional<Product> product = productService.read(id);
-        if (product.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(modelResponseMapper.map(product.get()));
+        return product.isPresent() ?
+                ResponseEntity.ok(modelResponseMapper.map(product.get()))
+                : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
