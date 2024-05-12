@@ -181,7 +181,13 @@ To run the project locally, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
-3. Open a terminal window and run the following command to start the application:
-4. h2 database console is available at "localhost:8080/h2-console"
+3. Open a terminal window and run the following command to start the application
+    - "mvn clean package" -- compile and create executable jar file using maven
+    - "cd target" -- change directory to target directory with executable .jar files
+    - "java -jar promocode-api-0.0.1-SNAPSHOT.jar" -- run compiled file
+4. Import "src/main/resources/promo_code_api.postman_collection.json" to Postman in order to send example request to the api service.
+5. h2 database console is available at "localhost:8080/h2-console"
    - user : "sa"
    - password : "password"
+6. Please keep in mind that h2 database loads example data from "src/main/resources/dump.sql" file on startup.
+7. By default the api service listens to port 8080
